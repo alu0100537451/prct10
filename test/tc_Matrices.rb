@@ -19,9 +19,9 @@ class TestMatrizDensa < Test::Unit::TestCase
     @matrizdis3 = Dispersa.new(3,3,[0,0,2,1,1,4,2,2,6])
 
     @matrizfrac1 = Densa.new(3,3,[Racional.new(1,2),Racional.new(1,3),Racional.new(1,4),Racional.new(1,5),Racional.new(1,6),Racional.new(1,7),Racional.new(1,8),Racional.new(1,9),Racional.new(1,10)])
-    @matrizfrac2 = Densa.new((3,3,[Racional.new(1,2),Racional.new(1,3),Racional.new(1,4),Racional.new(1,5),Racional.new(1,6),Racional.new(1,7),Racional.new(1,8),Racional.new(1,9),Racional.new(1,10)]))
-    @matrizfrac3 = Densa.new((3,3,[Racional.new(2,2),Racional.new(2,3),Racional.new(2,4),Racional.new(2,5),Racional.new(2,6),Racional.new(2,7),Racional.new(2,8),Racional.new(2,9),Racional.new(2,10)]))
-
+    @matrizfrac2 = Densa.new(3,3,[Racional.new(1,2),Racional.new(1,3),Racional.new(1,4),Racional.new(1,5),Racional.new(1,6),Racional.new(1,7),Racional.new(1,8),Racional.new(1,9),Racional.new(1,10)])
+    @matrizfrac3 = Densa.new(3,3,[Racional.new(2,2),Racional.new(2,3),Racional.new(2,4),Racional.new(2,5),Racional.new(2,6),Racional.new(2,7),Racional.new(2,8),Racional.new(2,9),Racional.new(2,10)])
+end  
    def testdensa
    
    assert_equal(@matrizden3,@matrizden1 + @matrizden2)
@@ -35,7 +35,7 @@ class TestMatrizDensa < Test::Unit::TestCase
   assert_equal(@matrizfrac3,@matrizfrac1 + @matrizfrac2)
   assert_equal(@matrizfrac1,@matrizfrac3 - @matrizfrac2)
 
-
+end
    def testdispersa
 
     assert_equal(@matrizdis3,@matrizdis1 + @matrizdis2)
