@@ -6,7 +6,7 @@ require 'SparseMatrixProject/version'
 Gem::Specification.new do |spec|
   spec.name          = "SparseMatrixProject"
   spec.version       = SparseMatrixProject::VERSION
-  spec.authors       = ["Jacobo Saavedra Valdes", "Aaron Jose Vera Cerdeña]
+  spec.authors       = ["Jacobo Saavedra Valdes", "Aaron Jose Vera Cerdeña"]
   spec.email         = ["alu0100658682@ull.edu.es", "alu0100537451@ull.edu.es"]
   spec.description   = %q{Gema para realizar suma y resta entre matrices densas y dispersas}
   spec.summary       = %q{Matrices dispersas y densas}
