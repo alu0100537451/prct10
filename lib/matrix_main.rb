@@ -1,6 +1,13 @@
 require "../lib/matriz.rb"
 
-	matriz1 = Matrices.new([[5,5,7],[4,5,8],[7,8,9]])
+	
+=begin
+	matrizden1 = Densa.new(3,3[1,3,5,2,4,6,7,8,9])
+	matrizden2 = Densa.new(3,3[1,3,5,2,4,6,7,8,9])
+	matrizdenS = Densa.new(3,3[0,0,0,0,0,0,0,0,0])
+
+	matrizdenS = matrizden1 + matrizden2
+	puts "#{(matrizdenS.to_s)}"
 
 	matriz2 = Matrices.new([[2,4,6],[1,3,5],[2,7,8]])
 
@@ -61,4 +68,4 @@ require "../lib/matriz.rb"
 
 
 
-
+=end

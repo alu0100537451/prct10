@@ -1,128 +1,191 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'nokogiri'
+require "../lib/racional.rb"
 
 class Matrices
         include Comparable
         include Enumerable
 
-        def initialize(m)
+        attr_accessor :filas, :columnas, :matriz
+
+	def initialize(f, c)
+                #atributo
+                 @filas=f.to_i; #Numero de filas
+                 @columnas=c.to_i; #Numero de columnas
+        end
+
+#################################################      
+	def +(other) 
+		if(self.filas == other.filas and self.columnas == other.columnas)
+                        # SELF Matrices densas
+                        if self.instance_of?Densa
+                                temp = Densa.new(self.filas, self.columnas, nil)
+                                if other.instance_of?Densa
+                                        
+                                        for i in (0...@filas.to_i)
+                                                for j in (0...@columnas.to_i)
+                                                        temp.matriz[i][j] = (self.matriz[i][j]) + (other.matriz[i][j])
+                                                end
+                                        end
+                                end
+
+                                if other.instance_of?Dispersa
+                                        for i in (0...@filas.to_i)
+                                                for j in (0...@columnas.to_i)
+                                                        encontrado = 0
+                                                        for k in (0...other.posx.size)
+                                                                if (i==other.posx[k] and j==other.posy[k] and encontrado==0)
+                                                                        temp.matriz[i][j] = (self.matriz[i][j]) + (other.valor[k])
+                                                                        encontrado = 1        
+                                                                end
+                                                        end
+                                                        if (encontrado == 0)
+                                                                temp.matriz[i][j] = self.matriz[i][j]
+                                                        end
+                                                end
+                                        end
+                                end
+                        end
+
+                        # SELF Matriz Dispersa
+                        if self.instance_of?Dispersa
+                                if other.instance_of?Densa
+                                        temp = Densa.new(self.filas, self.columnas, nil)
+                                        for i in (0...@filas.to_i)
+                                                for j in (0...@columnas.to_i)
+                                                        encontrado = 0
+                                                        for k in (0...self.posx.size.to_i)
+                                                                if (i==self.posx[k] and j==self.posy[k] and encontrado==0)
+                                                                        temp.matriz[i][j] = (other.matriz[i][j]) + (self.valor[k])
+                                                                        encontrado = 1        
+                                                                end
+                                                        end
+                                                        if (encontrado == 0)
+                                                                temp.matriz[i][j] = other.matriz[i][j]
+                                                        end
+                                                end
+                                        end
+                                end
+                
+
+                                if other.instance_of?Dispersa
+                                        temp = Dispersa.new(self.filas,self.columnas,[],[],[])
+                                        temp.valor = self.valor
+                                        temp.posx = self.posx
+                                        temp.posy = self.posy
+
+                                        for j in (0...other.posx.size.to_i)
+                                                encontrado = false
+                                                for k in (0...self.posx.size.to_i)
+                                                        if(other.posx[j] == temp.posx[k] and other.posy[j] == temp.posy[k])
+                                                                temp.valor[k] = temp.valor[k] + other.valor[j]
+                                                                encontrado = true
+                                                        end
+                                                        
+                                                end
+                                                if (encontrado == false)
+                                                        temp.posx << other.posx[j]
+                                                        temp.posy << other.posy[j]
+                                                        temp.valor << other.valor[j]
+                                                end
+                                        end
+                                end
+                        end
+                
+                        return temp
+                else
+                        return nil
+                end       
                 
         end
-        
-        attr_reader :filas, :columnas, :matriz
+##############################################################################
+
+##############################RESTA#######################################
 
 
 
-        def mostrar
 
-        end
-
-        def + (other)
-                raise "you must define method +"
-        end
-
-        def - (other)
-                raise "you must define method -"
-        end
-
-        def * (other)
-                raise "you must define method *"
-        end
-
-        def traspuesta
-                raise "you must define method traspuesta"
-        end
-
-        def opuesta
-                raise "you must define method opuesta"
-        end
 end
 
 
 class Dispersa < Matrices
-  def initialize
-    puts 'dispersa initializer'
-    super
-  end
+attr_accessor :posx, :posy, :valor
+        def initialize(f,c,posx, posy, valor)
+                super(f,c)
+                @posx = posx
+                @posy = posy
+                @valor = valor
+
+        end
+
+        def to_s
+                s=String.new
+                s << "["
+                for i in (0...@filas.to_i)
+                        s << "[#{posx[i]},#{posy[i]},#{valor[i]}]"
+                end
+                s << "]"
+        end
+
+        def max
+                m = self.valor[0]
+                for i in (0...self.valor.size.to_i)
+                                if (self.valor[i]> m)
+                                        m = self.valor[i]
+                                end
+                end
+                return m
+        end
+
+        def min
+                m = self.valor[0]
+                for i in (0...self.valor.size.to_i)
+                                if (self.valor[i]< m)
+                                        m = self.valor[i]
+                                end
+                end
+                return m
+        end
+
+        def pos(a,b)
+                for i in (0...self.posx.size)
+                        if(posx[i]==a and posy[i]==b)
+                                return valor[i]
+                        end
+                end
+                return nil
+        end
+
 end
 
 
 class Densa < Matrices
+attr_accessor :matriz
+        
+def initialize(f,c,m)
+                super(f,c)
+                @matriz = Array.new(@filas.to_i){Array.new(@columnas.to_i)}
 
-        def initialize(m)
-                @filas = m.size
-                @columnas = m[1].size
-                @matriz = m
+                 if (m != nil)
+                        #Rellenamos la matriz con lo valores recibidos
+                         for i in (0...@filas.to_i)
+                                for j in (0...@columnas.to_i)
+                                        @matriz[i][j]=m[i*@columnas.to_i+j];
+                                end
+                         end
+                 end
+        end
+        # Metodos getter devuelve el valor de una posicion determinada
+
+        def pos(a,b)
+                @matriz[a][b]
         end
         
-        attr_reader :filas, :columnas, :matriz
-
-#####Mostrar matriz
-
-        def mostrar
-                i=0
-                 while i < @matriz.length
-                 #print "Posicion #{i}---> "
-                 print @matriz[i]
-                 print "\n"
-                 i += 1
-                 end #Fin del bucle
+        #Metodo que devuelve la matriz en forma de string
+        def to_s
+                "#{@matriz}"
         end
-
-
-
-#####Cálculo de Suma de Matrices Enteras
-        def +(other)
-              i=0
-                 matriz_cp = @matriz
-                while i < @filas
-                        j=0
-                        while j < @columnas
-                           matriz_cp[i][j] = matriz_cp[i][j] + other.matriz[i][j]
-                                j += 1
-                        end
-                        i += 1
-                end
-                Matrices.new(matriz_cp)
-        end
-
-####Cálculo Resta de Matrices Enteras
-        def -(other)
-                i=0
-                 matriz_cp = @matriz
-                while i < @filas
-                        j=0
-                        while j < @columnas
-                           matriz_cp[i][j] = matriz_cp[i][j] - other.matriz[i][j]
-                                j += 1
-                        end
-                        i += 1
-                end
-                Matrices.new(matriz_cp)
-        end
-
-
-#####Calculo de Multiplicacion Mátrices enteras
-        def * (other)
-                i=0
-                 matriz_cp = Array.new(@filas) {Array.new(other.columnas)}
-                while i < @filas
-                        j=0
-                        while j < other.columnas
-                                matriz_cp[i][j] = 0
-                                k=0
-                                while k < @columnas
-                                   matriz_cp[i][j] = matriz_cp[i][j] + (matriz[i][k] * other.matriz[k][j])
-                                        k+=1
-                                end
-                                j += 1
-                        end
-                        i += 1
-                end
-                Matrices.new(matriz_cp)
-        end
-
 
 
 
@@ -198,78 +261,18 @@ end
 
 
 
-class SparseVector
-	attr_reader :vector
 
-	def initialize(h = {})
-		@vector = Hash.new(0)
-		@vector = @vector.merge!(h)
-	end
-
-	def [](i)
-		@vector[i] 
-	end
-
-	def to_s
-		@vector.to_s
-	end
-end
-
-class MatrizDispersa < Matrices
-
-	attr_reader :matrix
-
-	def initialize(h = {})
-		@matrix = Hash.new({})
-		for k in h.keys do 
-			@matrix[k] = if h[k].is_a? SparseVector
-			h[k]
-		else 
-			@matrix[k] = SparseVector.new(h[k])
-		end
-	end
-end
-
-	def [](i)
-		@matrix[i]
-	end
-
-	def col(j)
-		c = {}
-		for r in @matrix.keys do
-			c[r] = @matrix[r].vector[j] if @matrix[r].vector.keys.include? j
-		end
-		SparseVector.new c
-	end
-
-	def prb
-		
-		for i in 1..3
-			for j in 1..3
-				if self[i][j] == nil || self[i][j]==0
-					puts "0 o Nil"			
-				else
-					puts self[i][j]
-					puts i,j
-				end
-			end
-		end
-	end
-
-	def + (other)
-		 
-		i=1
-                matriz_cp = @matrix
-                while i < 3
-                        j=1
-                        while j < 3
-                           matriz_cp[i][j] = matriz_cp[i][j] + other[i][j]
-                                j += 1
-                        end
-                        i += 1
-                end
-                #puts MatrizDispersa.new(matriz_cp)		
-	end
+a=Densa.new(3,3,[1,2,3,4,5,6,7,8,9])
+b=Densa.new(3,3,[1,2,3,4,5,6,7,8,9])
+puts "#{(a+b).to_s}"
 
 
-end
+  
+c=Dispersa.new(3,3,[0,1,2],[0,1,2],[1,2,3])
+d=Dispersa.new(3,3,[0,1,2],[0,1,2],[1,2,3])
+
+puts c.to_s
+
+e=c+d
+puts "#{(e).to_s}"
+
