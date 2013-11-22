@@ -25,7 +25,7 @@ class TestMatrizDensa < Test::Unit::TestCase
 end
    def testdispersa
 
-    assert_equal "[[0,0,2],[1,1,4],[2,2,6]]", (Dispersa.new(3,3,[0,1,2],[0,1,2],[1,2,3]) + Dispersa.new(3,3,[0,1,2],[0,1,2],[1,2,3])).to_s
+    assert_equal "[[0,0,2][1,1,4][2,2,6]]", (Dispersa.new(3,3,[0,1,2],[0,1,2],[1,2,3]) + Dispersa.new(3,3,[0,1,2],[0,1,2],[1,2,3])).to_s
 
 
    end

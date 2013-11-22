@@ -20,7 +20,7 @@ class TestMatrizDensa < Test::Unit::TestCase
 
     assert_equal "[[1/1, 1/1], [1/1, 1/1]]", (MatrizDensa.new(2,2,[Fraccion.new(1,2),Fraccion.new(1,3),Fraccion.new(1,4),Fraccion.new(1,5)]) + MatrizDensa.new(2,2,[Fraccion.new(1,2),Fraccion.new(2,3),Fraccion.new(3,4),Fraccion.new(4,5)])).to_s
 
-    assert_equal "[[1/1, 1/1], [1/1, 1/1]]", (MatrizDensa.new(2,2,[Fraccion.new(1,2),Fraccion.new(1,3),Fraccion.new(1,4),Fraccion.new(1,5)]) + MatrizDensa.new(2,2,[Fraccion.new(1,2),Fraccion.new(2,3),Fraccion.new(3,4),Fraccion.new(4,5)])).to_s    
+    assert_not_equal "[[3/6, 1/1], [1/1, 1/1]]", (MatrizDensa.new(2,2,[Fraccion.new(1,2),Fraccion.new(1,3),Fraccion.new(1,4),Fraccion.new(1,5)]) + MatrizDensa.new(2,2,[Fraccion.new(1,2),Fraccion.new(2,3),Fraccion.new(3,4),Fraccion.new(4,5)])).to_s    
 
 end
    def testdispersa
