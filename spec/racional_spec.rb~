@@ -45,9 +45,9 @@ describe "#Operaciones de matrices densas" do
     it "Suma de matrices densas" do
        (@matrizden1+@matrizden2).to_s.should eq("[[2, 4, 6], [8, 10, 12], [14, 16, 18]]")
     end
-#     it "Resta de matrices densas" do
-#        (@matrizden1-@matrizden2).to_s.should eq("[[0, 0, 0], [0, 0, 0],[0, 0, 0]]")
-#    end
+     it "Resta de matrices densas" do
+        (@matrizden1-@matrizden2).to_s.should eq("[[0, 0, 0], [0, 0, 0], [0, 0, 0]]")
+    end
 end
 ########################################################
 #########OPERACIONES ENTRE MATRICES DISPERSAS###########
@@ -56,9 +56,10 @@ describe "#Operaciones de matrices dispersas" do
     it "Suma de matrices dispersas" do
        (@matrizdis1+@matrizdis2).to_s().should eq("[[0,0,2][1,1,4][2,2,6]]")
     end
-#it "Resta de matrices dispersas" do
-       #(@matrizdis1-@matrizdis2).to_s().should eq("[0,0,2][1,1,4][2,2,6]")
-   # end
+    
+    it "Resta de matrices dispersas" do
+       (@matrizdis1-@matrizdis2).to_s().should eq("[0,0,0][1,1,0][2,2,0]")
+    end
 end
 ########################################################
 #####OPERACIONES ENTRE MATRICES DISPERSAS Y DENSAS######
@@ -67,25 +68,18 @@ describe "#Operaciones de matrices dispersas y densas" do
     it "Suma de Matrices Dispersas y Densas" do
 	(@matrizdis1+@matrizden1).to_s().should eq("[[2, 2, 3], [4, 7, 6], [7, 8, 12]]")
     end
-
-    #it "Resta de Matrices Dispersas y Densas" do
-	#(@r1-@r3).to_s().should eq("[]"
-    #end
-
+    
     it "Suma de Matrices Densas y Dispersas" do
         (@matrizden1+@matrizdis1).to_s().should eq("[[2, 2, 3], [4, 7, 6], [7, 8, 12]]") 
     end
-
-    #it "Resta de Matrices Densas y Dispersas" do
-        #(@r3-@r1).to_s().should eq("[]" 
-   # end
+    
 ##################################################################
 #########MÁXIMO Y MÍNIMO DE MATRICES DENSAS#######################
 ##################################################################
 describe "Maximo y minimo de matrices densas" do
 
     it"El maximo de una matriz densa se realiza correctamente" do
-        @matrizden1.maximo.should eq (6)
+        @matrizden1.maximo.should eq (9)
       end
       it"El minimo de una matriz densa se realiza correctamente" do
         @matrizden2.minimo.should eq (1)

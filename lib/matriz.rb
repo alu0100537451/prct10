@@ -353,6 +353,6 @@ d=Dispersa.new(3,3,[0,1,2],[0,1,2],[1,2,3])
 
 puts c.to_s
 
-e=c+d
+e=c-d
 puts "#{(e).to_s}"
 

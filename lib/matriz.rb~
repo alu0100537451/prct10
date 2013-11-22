@@ -185,9 +185,8 @@ def -(other)
                 end
         end
         
-	end
 end
-end
+
 
 
 class Dispersa < Matrices
