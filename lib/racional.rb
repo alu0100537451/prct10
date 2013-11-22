@@ -1,4 +1,4 @@
-require "../lib/gcd.rb"
+require "./lib/gcd.rb"
 
 class Racional
 	include Comparable

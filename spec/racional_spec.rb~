@@ -58,7 +58,7 @@ describe "#Operaciones de matrices dispersas" do
     end
     
     it "Resta de matrices dispersas" do
-       (@matrizdis1-@matrizdis2).to_s().should eq("[0,0,0][1,1,0][2,2,0]")
+       (@matrizdis1-@matrizdis2).to_s().should eq("[[0,0,0][1,1,0][2,2,0]]")
     end
 end
 ########################################################

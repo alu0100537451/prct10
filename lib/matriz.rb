@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'nokogiri'
-require "../lib/racional.rb"
+require "./lib/racional.rb"
 
 class Matrices
         include Comparable
@@ -338,21 +338,3 @@ def initialize(f,c,m)
           return max                
         end        
 end
-
-
-
-
-a=Densa.new(3,3,[1,2,3,4,5,6,7,8,9])
-b=Densa.new(3,3,[1,2,3,4,5,6,7,8,9])
-puts "#{(a-b).to_s}"
-
-
-  
-c=Dispersa.new(3,3,[0,1,2],[0,1,2],[1,2,3])
-d=Dispersa.new(3,3,[0,1,2],[0,1,2],[1,2,3])
-
-puts c.to_s
-
-e=c-d
-puts "#{(e).to_s}"
-
